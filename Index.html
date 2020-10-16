@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--Hamza's Assignment 2-->
+        <title>Book Ordering System</title>
+        <style>
+            table, tr, td {
+                border-color: gray;
+                border-style: ridge;
+                border-collapse: collapse;
+                border-width: 2.3px;
+                margin: auto;
+            }
+
+            @import url(https://allfont.net/allfont.css?fonts=agency-fb);
+
+            html {
+                /*background-image: url(resources/gradient.jpg);*/
+                background: linear-gradient(305deg, #009FFF, #ec2F4B);
+                /*background: linear-gradient(305deg, #0F2027, #203A43, #2C5364);*/
+                background-size: 360% 360%;
+                -webkit-animation: Animation 12s ease infinite;
+                animation: Animation 12s ease infinite;
+                /*font-family: consolas;*/
+                font-family: 'Agency FB', Arial;
+            }
+
+            @keyframes Animation {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+
+            table {
+                background-image: linear-gradient(to bottom, white, darkgrey);
+                background-origin: border-box;
+                border-spacing: 5px;
+                background-size: 100% 100%;
+                -webkit-animation: Animation2 1s ease infinite;
+                animation: Animation2 1s ease infinite;
+            }
+
+            @keyframes Animation2 {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+
+            thead {
+                background-color: '';
+                font-weight: bold;
+            }
+
+            h1 {
+                text-align: center;
+                color: black;   
+            }
+
+            tr {
+                height: 30px
+            }
+
+            tbody tr:hover {
+                background-color: black;
+                /*background: linear-gradient(305deg, #0F2027, #203A43, #2C5364);
+                background-size: 360% 360%;
+                -webkit-animation: Animation3 8s ease infinite;
+                animation: Animation3 8s ease infinite;*/
+                color: white;
+            }
+
+            /*@keyframes Animation3 {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }*/
+
+            td {
+                padding: 3px 5px;              
+            }    
+
+            tfoot {
+                background-color: '';
+                text-align: right;
+            }
+
+
+            tr.footer {
+                height: 50px;
+            }
+
+            .author_name {
+                width: 125px;
+            }
+
+            .book_title {
+                width: 200px;
+            }
+
+            .unit_price, .quantity, .total {
+                width: 80px;
+                text-align: right;
+                border-radius: 7px;
+                border-color: black;
+            }
+
+            .total {
+                background-color: silver;  
+                color: black; 
+            }
+
+            .grand_total {
+                background-color: silver;
+                width: 150px;
+                height: 30px;
+                border: 5px 7px 7px 45px;
+                font-size: x-large;
+                font-weight: 500;
+                text-align: right;
+                color: black;
+                border-radius: 7px;
+                border-color: rgb(70, 70, 70);
+            }
+
+            .grand_total, .total:hover {
+                cursor: no-drop;
+            }
+
+            .category:hover {
+                cursor: pointer;
+            }
+
+            #span {
+                visibility: hidden;
+            }
+
+            #showTotalButton:hover {
+                cursor: pointer;
+                border: 2px groove black;
+                border-radius: 10px;
+                padding: 7px;
+                padding-right: 12px;
+            }
+
+            #showTotalButton:hover span {
+                visibility: visible;
+                padding-left: 12px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Book Ordering System</h1>
+        <table>
+            <thead>
+                <tr>                
+                    <td>No.</td>
+                    <td>Book Title</td>
+                    <td>Author</td>
+                    <td>Category</td>
+                    <td align="right">Unit Price</td>
+                    <td align="right">Quantity</td>
+                    <td align="right">Total</td>
+                </tr>
+            </thead>
+            <tbody id="tb">
+                <tr>
+                    <td align="right">1</td>
+                    <td><input class="book_title" type="text" name="title" maxlength="30" value=""></td>
+                    <td><input class="author_name" type="text" name="author" maxlength="30" value=""></td>
+                    <td>
+                        <select name="category" class="category">
+                            <option selected disabled hidden>Please choose the category...</option>
+                            <option value="">Business</option>
+                            <option value="">Fiction</option>
+                            <option value="">Mathematics</option>
+                            <option value="">Technology</option>
+                        </select>
+                    </td>
+                <td><input id="up1" class="unit_price" type="text" name="unit_price" maxlength="20" value="0.00" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="twoDecimalplace(this)" onchange="calculateTotal();"></td>
+                    <td><input id="q1"class="quantity" type="text" name="quantity" maxlength="20" value="0" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="calculateTotal();"></td>
+                    <td><input id="t1"class="total" type="text" name="total" maxlength="20" value="0.00" disabled></td> 
+                </tr>
+                <tr>
+                    <td align="right">2</td>
+                    <td><input class="book_title" type="text" name="title" maxlength="30" value=""></td>
+                    <td><input class="author_name" type="text" name="author" maxlength="30" value=""></td>
+                    <td>
+                        <select name="category" class="category">
+                            <option selected disabled hidden>Please choose the category...</option>
+                            <option value="">Business</option>
+                            <option value="">Fiction</option>
+                            <option value="">Mathematics</option>
+                            <option value="">Technology</option>
+                        </select>
+                    </td>
+                    <td><input id="up2" class="unit_price" type="text" name="unit_price" maxlength="20" value="0.00" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="twoDecimalplace(this)" onchange="calculateTotal();"></td>
+                    <td><input id="q2" class="quantity" type="text" name="quantity" maxlength="20" value="0" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="calculateTotal();"></td>
+                    <td><input id="t2" class="total" type="text" name="total" maxlength="20" value="0.00" disabled></td>
+                </tr>
+                <tr>
+                    <td align="right">3</td>
+                    <td><input class="book_title" type="text" name="title" maxlength="30" value=""></td>
+                    <td><input class="author_name" type="text" name="author" maxlength="30" value=""></td>
+                    <td>
+                        <select name="category" class="category">
+                            <option selected disabled hidden>Please choose the category...</option>
+                            <option value="">Business</option>
+                            <option value="">Fiction</option>
+                            <option value="">Mathematics</option>
+                            <option value="">Technology</option>
+                            </select>
+                    </td>
+                    <td><input id="up3" class="unit_price" type="text" name="unit_price" maxlength="20" value="0.00" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="twoDecimalplace(this)" onchange="calculateTotal();"></td>
+                    <td><input id="q3" class="quantity" type="text" name="quantity" maxlength="20" value="0" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="calculateTotal();"></td>
+                    <td><input id="t3" class="total" type="text" name="total" maxlength="20" value="0.00" disabled></td>
+                </tr>
+                <tr>
+                    <td align="right">4</td>
+                    <td><input class="book_title" type="text" name="title" maxlength="30" value=""></td>
+                    <td><input class="author_name" type="text" name="author" maxlength="30" value=""></td>
+                    <td>
+                        <select name="category" class="category">
+                            <option selected disabled hidden>Please choose the category...</option>
+                            <option value="">Business</option>
+                            <option value="">Fiction</option>
+                            <option value="">Mathematics</option>
+                            <option value="">Technology</option>
+                        </select>
+                    </td>
+                    <td><input id="up4" class="unit_price" type="text" name="unit_price" maxlength="20" value="0.00" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="twoDecimalplace(this)" onchange="calculateTotal();"></td>
+                    <td><input id="q4" class="quantity" type="text" name="quantity" maxlength="20" value="0" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="calculateTotal();"></td>
+                    <td><input id="t4" class="total" type="text" name="total" maxlength="20" value="0.00" disabled></td>
+                </tr>
+                <tr>
+                    <td align="right">5</td>
+                    <td><input class="book_title" type="text" name="title" maxlength="30" value=""></td>
+                    <td><input class="author_name" type="text" name="author" maxlength="30" value=""></td>
+                    <td>
+                        <select name="category" class="category">
+                            <option selected disabled hidden>Please choose the category...</option>
+                            <option value="">Business</option>
+                            <option value="">Fiction</option>
+                            <option value="">Mathematics</option>
+                            <option value="">Technology</option>        
+                        </select>
+                    </td>
+                    <td><input id="up5" class="unit_price" type="text" name="unit_price" maxlength="20" value="0.00" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="twoDecimalplace(this)" onchange="calculateTotal();"></td>
+                    <td><input id="q5" class="quantity" type="text" name="quantity" maxlength="20" value="0" onfocus="this.value='' " onkeypress="return isNumberKey(event)" onchange="calculateTotal();"> </td>
+                    <td><input id="t5" class="total" type="text" name="total" maxlength="20" value="0.00" disabled></td>
+                </tr>
+                </tbody>
+            <tfoot>
+                <tr class="footer">
+                    <td colspan="5"><button id="showTotalButton" onclick="calculateGrandTotal();">Calculate Grand Total Price<span id="span"> >></span></button></td>
+                    <td colspan="2"><input id="grand_total" class="grand_total" type="text" name="grand_total" maxlength="20" value="0.00" disabled></td>
+                </tr>
+            </tfoot>
+        </table>    
+        <script>
+            // the below function only lets the user enter numbers which can be decimal values also 
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode
+                if (charCode > 31  && (charCode <  46 || charCode > 57))
+                    return false;
+                return true;
+            };
+
+            // this function sets the value to two decimal places
+            function twoDecimalplace(el)  {
+                el.value = parseFloat(el.value).toFixed(2);
+            };
+
+            // this function calculates the total value for each cell in the total column
+            calculateTotal = () => {
+                let total1 = document.getElementById("up1").value * document.getElementById("q1").value;
+                document.getElementById("t1").value = total1.toFixed(2);
+                let total2 = document.getElementById("up2").value * document.getElementById("q2").value;
+                document.getElementById("t2").value = total2.toFixed(2);
+                let total3 = document.getElementById("up3").value * document.getElementById("q3").value;
+                document.getElementById("t3").value = total3.toFixed(2);
+                let total4 = document.getElementById("up4").value * document.getElementById("q4").value;
+                document.getElementById("t4").value = total4.toFixed(2);
+                let total5 = document.getElementById("up5").value * document.getElementById("q5").value;
+                document.getElementById("t5").value = total5.toFixed(2);
+                let sum_of_totals = parseFloat(total1) + parseFloat(total2) + parseFloat(total3) + parseFloat(total4) + parseFloat(total5);
+                return sum_of_totals
+            }; 
+
+            // this function displays the sum of total column when "button" to calculate is clicked
+            calculateGrandTotal = () => {
+                document.getElementById("grand_total").value = calculateTotal().toFixed(2);
+            };
+        </script>
+    </body>
+</html>
